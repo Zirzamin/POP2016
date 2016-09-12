@@ -1,30 +1,70 @@
 \section{1.2}
 
 \textit{Hvilket slags spil vil vi lave?}\\
-<<<<<<< HEAD
-Vi sigtede i gruppen efter at lave et simpelt spil, så vores fokus kunne ligge på programmeringen i scratch i stedet for at bruge en masse tid på gamedesign.
+
+Vi sigtede i gruppen efter at lave et simpelt spil, så vores fokus kunne ligge på programmeringen i scratch i stedet for at bruge en masse tid på gamedesign.\\
 
 Simpel hop over forhindringer i 2d sidecrolling miljø!
 
-Program design:
+\subsection{Spilkoncept}
 
-Katten skal hoppe over 
+Katten skal undgå at blive bidt af hunden ved at hoppe over hunden. Hver gang man hopper over hunden får man et point, der tælles oppe i venstre hjørne. Hundens hastighed øges ydermere for hver point man scorer. Dette skaber en dynamisk sværhedsgrad der tilpasser spillerens evne.
 
-=======
 Vi sigtede i gruppen efter at lave et simpelt spil,
-så vores fokus kunne ligge på programmeringen i scratch
-i stedet for at bruge en masse tid på gamedesign.\\
->>>>>>> 01bb02e78c356bed3e2272a42eeda123215b7851
+så vores fokus kunne ligge på programmeringen i scratch i stedet for at bruge en masse tid på gamedesign.\\
 
 \begin{figure}[ht]
 	\centering
-<<<<<<< HEAD
-	\includegraphics[scale=0.8]{10_ScratchBloks.png}
-	\caption{{10 Scratch Bloks}}
-	\label{fig:10Bloks}
-=======
-	\includegraphics[scale=0.8]{Scratch_game.png}
-	\caption{{10 Scratch Bloks}}
-	\label{fig:Version_0.1}
->>>>>>> c7b8d49c1479f86c1c56a6da835904e36a918812
+	\includegraphics[scale=0.5]{Scratch_Game.png}
+	\caption{{Scratch Spil}}
+	\label{fig:screen_dump}
 \end{figure}
+
+\clearpage
+\subsection{Programmering}
+
+Som den mest fundamentale funktion i spillet skal katten kunne hoppe over hunden.\\
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=1]{jump.png}
+	\caption{{Hoppe mekanismen for katten}}
+	\label{fig:jumpCat}
+\end{figure}
+
+Når katten modtager vores startmeddelelse (Baggrund), så vil den altid antage sin startposition givet ved koordinaterne (x:-175, y:-125). Derefter vil den for evigt vente på spilleren giver kommandoen mellemrum, hvor efter den i et bestemt tidsinterval vil rykke hundred enheder op på y og ned.\\
+
+Dernæst skal vores kat holde øje med om den støder ind i hunden.\\
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=1]{collision.png}
+	\caption{{Kollision med hunden}}
+	\label{fig:coll}
+\end{figure}
+
+Når spriten modtager vores startmeddelelse holder katten for evigt øje med om den berør en hund. Hvis katten på et vilkårligt tidspunkt berør hunden siger den 'Av for dælen!' og vil dernæst sende en besked rundt som får Game over-spriten til at dukke op, inden den stopper alle andre scripts.\\
+\clearpage
+Vores spil er også afhængigt af at der skabes hunde som katten undgå\\
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=1]{baggrunddog.png}
+	\caption{{Sender signal ved tilfældige intervaller til at skabe og sende hunde}}
+	\label{fig:dog_sig}
+\end{figure}
+
+Når startmeddelelsen sendes rundt, nulstilles vores hundevariabel for det første, idet den angiver hvor mange hunde man har undgået. Derefter vil hundene resten af spillet skabes i et interval på 1-5 + 2 sekunder, de to sekunder er lagt til for at sikre en hvis reaktionstid for spilleren. Når en hund skal skabes sendes beskeden 'sendthedog'. (Vi kunne dog have ændret det tilfældige valg til 3-7 sekunder og opnå samme resultat)\\
+
+
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=1]{sendthedog.png}
+	\caption{{Initialisere hunden og bestemmer hastigheden på baggrund af point}}
+	\label{fig:dog_init}
+\end{figure}
+
+
+
+
+
