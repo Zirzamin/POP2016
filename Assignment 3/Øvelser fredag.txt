@@ -1,0 +1,76 @@
+3ø.0)
+
+
+let a = 3
+let b = 4
+let x = 5
+printfn "%A * %A + %A = %A" a x b (a * x + b)
+
+
+3 * 5 + 4 = 19
+
+val a : int = 3
+val b : int = 4
+val x : int = 5
+val it : unit = ()
+
+
+https://msdn.microsoft.com/en-us/visualfsharpdocs/conceptual/core.printf-module-%5Bfsharp%5D
+
+let y = a*x+b
+
+printfn "%A * %A + %A = %A" a x b y
+
+3 * 5 + 4 = 19
+
+Nej da det er en variable for sig selv.
+
+3ø.1
+let y = let a = 3 in let b = 4 in let x = 5 in a*x+b;;
+
+3ø.2
+
+
+printfn "Hello %s!" (let lastName = "Sporring" in let firstName = "Jon" in firstName + " " + lastName) ;;
+
+
+let firstName = "Jon";;
+let lastName = "Sporring" in firstName + " " + lastName;;
+
+Op til 4 eller 5 måder.
+
+3ø.3
+let f a x b = a*x+b;;
+
+printfn "a*x + b = %A" (f 3 5 4)
+
+
+printfn "%A*%A + %A = %A" 3 5 4 (f 3 5 4)
+
+3ø.4
+for i = 0 to 5 do
+    printfn "a*x + b = %A" (f 3 i 4)
+
+
+let mutable i = 5
+while (i > -1) do
+   printfn "a*x + b = %A" (f 3 i 4)
+   i <- i - 1
+   
+
+3ø.5
+
+for i = 1 to 10 do
+    for j = 1 to 10 do
+        
+        printf "%A " (i*j)
+
+
+let Muliplikationstabel =
+  seq { for i = 1 to 10 do
+            for j = 1 to 10 do
+                yield (i*j)}
+
+printf "%A " Muliplikationstabel
+ 
+
