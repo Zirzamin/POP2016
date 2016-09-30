@@ -14,10 +14,9 @@ let rec merge (xs,ys) =
     | (xs, []) -> xs 
     | (x :: xs, y :: ys) ->
         if x = y then merge (xs, y :: ys)
-        elif x < y then x :: merge (xs, y :: ys)
+//        elif x < y then x :: merge (xs, y :: ys)
         else y :: merge (x :: xs, ys)
-
-
+ 
 let rec sortList l =
     match l with
     | [] -> [] 
@@ -26,8 +25,26 @@ let rec sortList l =
         let (xs, ys) = split l [] [] 
         merge (sortList xs, sortList ys)
 
-let a = ["b";"a";"d";"A";"e"]
 
-let a = [3;5;5;3;9;1]
+//Balck box testing
+let test2 = [1;2;3;4;5;6]
+let test = [6..1]
+
+let test = [5;5;5;5;5;5]
+
+
+let test3 = []
+let test3 = [1]
+
+let test4 = [9;1;1;1;5;5]
+
+let test5 = [9;1;1;5;5;1]
+
+let test = [1;2;3;4;4;3;2;1]
+
+let test = ["b";"a";"d";"A";"e"] // 
+
+let test1 = [3;-5;'a';3;9;1] // false
+
 
 sortList a
