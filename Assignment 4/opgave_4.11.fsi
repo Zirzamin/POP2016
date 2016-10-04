@@ -24,19 +24,25 @@ let rec insert (l:int list, i:int) : int list =
 // Del 3
 
 let rec intersect (l1 : int list, l2 : int list) : int list =
-    match l1 with
-    |[] -> []
-    |h::t -> 
-        match l2 with
-            |[] -> []
-            |h2::t2 ->
-                if h=h2 then h::intersect(t,t2)
-                elif h<h2 then intersect(t, h2::t2)
-                else intersect(l2,t2)
+    match (l1,l2) with
+    |(h::t,h2::t2) ->
+        if h = h2 then h :: intersect(t,t2)
+        elif h<h2 then intersect(t, h2::t2)
+        else intersect(l1,t2)
+    |_,_ -> []
+
+
+
+//    match l1 with
+//    |[] -> []
+//    |h::t -> 
+//        match l2 with
+//            |[] -> []
+//            |h2::t2 ->
+//                if h=h2 then h::intersect(t,t2)
+//                elif h<h2 then intersect(t, h2::t2)
+//                else intersect(l2,t2)
              
-    
-
-
 intersect([1;1;1;2;2],[1;1;2;3;3;3;3;4]) //= [1;1;2]
 
 let ib = [1;2;2;3;4;5;6;7;7;7;7;7;9;9;9;10;11]
