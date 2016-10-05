@@ -6,8 +6,8 @@ let rec minus (l1 : int list, l2 : int list) : int list =
       |[] -> l1
         |h2::t2 ->
           if h=h2 then minus(t, t2)
-          elif h<h2 then h::minus(t, h2::t2)
-          else minus(h::t, t2)
+          elif h<h2 then h::minus(t, l2)
+          else minus(l1, t2)
 
 
 let a = [1;1;1;2;2]
