@@ -36,7 +36,7 @@ let rec count (l:int list, i:int) =
             1 + count(t,i)
         else count(t,i)
 
-printfn "           count(int list,int)"
+printfn "    HR 4.11 (4.)     count(int list,int)"
 printfn "Test1: %b" (count([1;2;1;3;2],1) = 2)
 printfn "Test2: %b" (count([1;4;2;1;2;2;3;2;2],2) = 5)
 printfn "Test3: %b" (count([1;2;3;4;5;5;4;3;2;1],6) = 0)
@@ -147,7 +147,7 @@ printfn "Test3: %b" (plus([1;2],[2;4]) = [1;2;2;4])
 printfn "Test4: %b" (plus([],[1;1;2;3]) = [1;1;2;3])
 printfn "Test5: %b" (plus([1;1;2],[]) = [1;1;2])
 printfn "Test6: %b" (plus([],[]) = [])
-printfn "Test7: %b" (plus([7],[2]) = [7;2])
+printfn "Test7: %b" (plus([7],[2]) = [2;7])
 
 (* 5 *)
 
@@ -176,11 +176,6 @@ let rec minus (l1 : int list, l2 : int list) : int list =
           if h=h2 then minus(t, t2)
           elif h<h2 then h::minus(t, l2)
           else minus(l1, t2)
-
-let a = [1;1;1;2;2]
-let b = [1;1;2;3]
-printf "%A" (minus (a,b))
-printf "%A" (minus (b,a))
 
 printfn "    HR 4.11 (5.)      minus(int list,int list)"
 printfn "Test1: %b" (minus([1;1;1;2;2],[1;1;2;3]) = [1;2])
