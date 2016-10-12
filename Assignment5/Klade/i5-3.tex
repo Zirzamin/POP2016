@@ -1,0 +1,38 @@
+\subsection{i5-3}
+
+\verb|arraySort l | starts by matching if \verb|l| is an empty or an array that has only one element. If so return the empty or 1 element array.
+
+For all other cases go through the array \verb|l| and return a new array where all the elements are smaller then the first element of \verb|l|. The result gets feeded to \verb|arraysort| till the smallest element in \verb|l| is found.
+
+\begin{verbatim} l |> Array.filter ((>)(Array.head l)) |> arraySort\end{verbatim} 
+
+This smallest element we place in front of the first element in \verb|l| and assign it to \verb|temp|.
+
+\begin{verbatim} let temp = [|Array.head l|] |> Array.append \end{verbatim}
+
+Next we start filtering l for all elements bigger or equal the first element in \verb|l| 
+
+\begin{verbatim} l |> Array.filter ((<=)(Array.head l)) \end{verbatim}
+
+we find the tail and feed it to \verb|arraysort| so it can get sorted as well.
+
+\begin{verbatim} |> Array.tail |>arraySort \end{verbatim}
+
+and one by one we attach the next smallest element behind the last smallest element.
+
+\begin{verbatim} |> Array.append temp \end{verbatim}
+
+
+\lstset{}
+\begin{lstlisting}
+let rec arraySort l = 
+    match l with
+    |[||] |[|_|] -> l
+    | _ -> 
+        let temp = [|Array.head l|] |> Array.append 
+       	 (l |> Array.filter ((>)(Array.head l)) |> arraySort)
+        l |> Array.filter ((<=)(Array.head l)) |> Array.tail 
+         |>arraySort |> Array.append temp
+
+\end{lstlisting}
+

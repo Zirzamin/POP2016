@@ -1,0 +1,28 @@
+\subsection{i5-4} 
+
+ArraySortD is a bubbleSort algorithm. Here it uses two loops to sort a list, here in this case an array and i use one for-loop and one while-loop. The for loop runs from 1 to the number of elements in the given array. And the while loop runs depending on how the array is sorted at start.
+
+The for loop start looking at the first element then next and so on. The while loop pushes elements that are smaller then the previous element in the array to the left. So to speak to the head of the array. This is done by using a swap method.
+
+\begin{verbatim}
+	let tmp = a.[j]
+	a.[j] <- a.[j-1]
+	a.[j-1] <- tmp
+\end{verbatim}
+
+The function is given by: 
+
+\lstset{}
+\begin{lstlisting}
+let arraySortD (a : 'a []) =
+    for i = 1 to a.Length - 1 do
+        let mutable j = i
+        while j >= 1 && a.[j] < a.[j-1] do
+            let tmp = a.[j]
+            a.[j] <- a.[j-1]
+            a.[j-1] <- tmp
+            j <- j - 1
+
+\end{lstlisting}
+
+
