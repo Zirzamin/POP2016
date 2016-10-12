@@ -1,0 +1,163 @@
+\subsection{2i.1}
+
+Udfyld følgende tabel
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{|c|c|c|c|}
+		\hline
+		Decimal & Binær & Heximal & Oktal  \\ \cline{1-4}
+		10 & 1010 & A & 12 \\ \cline{1-4}
+		21 & 10101 & 15 & 25  \\ \cline{1-4}
+		63 & 111111 & 3F & 77 \\ \cline{1-4}
+		63 & 111111 & 3F & 77 \\ \cline{1-4}
+	\end{tabular}
+\end{table}
+
+\clearpage
+
+\textbf{Første række:}
+
+\underline{Decimal 10 til binær:}
+\begin{align*}
+	\frac{10}{2} &= 5 \hphantom{10} \text{Rest 0}\\
+	\frac{5}{2} &= 2 \hphantom{10} \text{Rest 1}\\
+	\frac{2}{2} &= 1 \hphantom{10} \text{Rest 0}\\
+	\frac{1}{2} &= 1 \hphantom{10} \text{Rest 1}\\
+\end{align*}
+
+Ergo $(10)_{10}$ = $(1010)_2$\\
+
+Det er givet at 
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+		\hline
+		\textbf{Dec}&0&1&2&3&4&5&6&7&8&9&10&11&12&13&14&15\\ \cline{1-17}
+		\textbf{Hex}&0&1&2&3&4&5&6&7&8&9&A&B&C&D&E&F\\ \cline{1-17}
+	\end{tabular}
+\end{table}
+
+Derfor må $(10)_{10}$ = $(A)_{Hex}$\\
+
+\underline{Decimal 10 til Oktal:}
+$$
+10\mod 8 = 2 \hphantom{10} \text{hvilket man regner ved:} \frac{10}{8} = \underline{\textbf{1}}.25 \hphantom{10} \Rightarrow 8^{\underline{\textbf{1}}} + 2 = 10 \hphantom{10} \text{altså rest 2}\\
+$$
+Vores Octal nummer er nu ??2 og vi gentager igen fra før:
+$$
+1\mod 8 = 1 \hphantom{10} \text{hvilket man regner ved:} \frac{1}{8} = \underline{\textbf{0}}.125 \hphantom{10} \Rightarrow 8^{\underline{\textbf{0}}} + 1 = 1 \hphantom{10} \text{altså rest 1}\\
+$$
+Ergo tallet er 12 .\\
+
+Derfor må $(10)_{10}$ = $(12)_{8}$\\
+
+\textbf{Anden række:}\\
+\underline{Binær 10101 til decimal:\\}
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{ccccc}
+		$1$&$0$&$1$&$0$&$1$\\ 
+		$2^4$&$+2^3$&$+2^2$&$+2^1$&$+2^0$\\ 
+	\end{tabular}
+\end{table}
+
+10101 betyder altså $2^0 + 2^2 + 2^4 = 21$ \\
+
+Ergo $(10101)_{2}$ = $(21)_{10}$\\
+
+\textbf{10101 til Hex:}
+
+Vi udvider vores tabel gennem samme øvelse som vist oven over.:
+\begin{table}[!htbp]
+	\setlength\tabcolsep{4pt}
+	\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+		\hline
+		\textbf{Dec}&0&1&2&3&4&5&6&7&8&9&10&11&12&13&14&15\\ \cline{1-17}
+		\textbf{Bin}&0000&0001&0010&0011&0100&0101&0110&0111&1000&1001&1010&1011&1100&1101&1110&1111\\ \cline{1-17}
+		\textbf{Hex}&0&1&2&3&4&5&6&7&8&9&A&B&C&D&E&F\\ \cline{1-17}
+	\end{tabular}
+\end{table}
+
+\clearpage
+Vi ser igen på 10101. Da vi ved at 1 Hex ækvivalent med 4 bit deler vi det binær tal op i grupper af 4. 10101 skrives som 0001 0101 og fra tabellen har vi:
+\begin{table}[h]
+	\centering
+	\begin{tabular}{cc}
+		$0001$&$0101$\\ 
+		$1$&$5$\\ 
+	\end{tabular}
+\end{table}
+
+Ergo $(10101)_{2}$ = $(15)_{Hex}$\\
+
+\underline{10101 til Oktal:}
+
+Vi udvider vores tabel nu med oktal:
+
+
+\begin{table}[!htbp]
+	\caption{Konverterings tabel}
+	\setlength\tabcolsep{4pt}
+	\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+		\hline
+		\textbf{Dec}&0&1&2&3&4&5&6&7&8&9&10&11&12&13&14&15\\ \cline{1-17}
+		\textbf{Bin}&0000&0001&0010&0011&0100&0101&0110&0111&1000&1001&1010&1011&1100&1101&1110&1111\\ \cline{1-17}
+		\textbf{Hex}&0&1&2&3&4&5&6&7&8&9&A&B&C&D&E&F\\ \cline{1-17}
+		\textbf{Oktal}&0&1&2&3&4&5&6&7\\ \cline{1-9}
+	\end{tabular}
+\end{table}
+
+Vi ser på 10101. Da vi ved at 1 oktal er ækvivalent med 3 bit deler vi det binær tal op i grupper af 3. 10101 skrives som 010 101 og ved brug af tabellen får:
+
+\begin{table}[!htbp]
+	\centering
+	\begin{tabular}{cc}
+		$010$&$101$\\ 
+		$2$&$5$\\ 
+	\end{tabular}
+\end{table}
+
+Ergo $(10101)_{2}$ = $(25)_{8}$\\
+
+\textbf{Tredje række:}
+
+\underline{Hex 3F til Bin og til oktal:}
+
+Omskriver hex 3F til bin: 3 \textrightarrow 0011 og F \textrightarrow 1111. Ergo $(3\text{F})_{Hex}$ = $(0011 1111)_{2}$\\
+
+Nu deler vi det binær tal op i grupper af 3 og får 000 111 111. Fra tabellen har vi:
+
+\begin{table}[!htbp]
+	\centering
+	\begin{tabular}{ccc}
+		$000$&$111$&$111$\\ 
+		$0$&$7$&$7$\\ 
+	\end{tabular}
+\end{table}
+
+Ergo $(3\text{F})_{Hex}$ = $(77)_{8}$\\
+
+\underline{Hex til decimal:}
+
+3F = $(3*16^1)+(15*16^0) = 48 + 15 = 63$ \\
+Ergo $(3\text{F})_{Hex}$ = $(63)_{10}$\\
+
+\textbf{Fjerde række:}
+
+\underline{oktal 77 til bin også til hex}
+
+Vi ser hurtigt fra tabel 1 at tallet 77 kan skrives som binært:
+\begin{table}[!htbp]
+	\centering
+	\begin{tabular}{cc}
+		$7$&$7$\\ 
+		$111$&$111$\\ 
+	\end{tabular}
+\end{table}
+
+Ergo $(77)_{8}$ = $(111 111)_{2}$\\ og igen kan det grupperes som 0011 1111 hvilket giver henholdsvis tallet 3 og F, ergo 3F
+
+

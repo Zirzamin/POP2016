@@ -1,6 +1,18 @@
-//(b)
+(*3i.1b*)
 
-//two for loops and using sprintf
+///<summary>
+///loopMultable creates a multiplication table from 1 to n and prints it out,
+/// using two for-loops
+///</summary>
+///<params name="n">
+///int number of n to print out.
+///</params>
+///<returns>
+/// void
+///</returns>
+///<remarks>
+///Two for loops and using sprintf
+///</remarks>
 
 let loopMulTable n =
     let mutable r = ""
@@ -10,10 +22,6 @@ let loopMulTable n =
             r <- r+sprintf "%*d " 3 (i*j)
         r <- r+"\n"
         if i = 1 then r <- r.[1..] + r
-    r;;
+    r
 
-//Try out all n from 1 to n .
-let print n = for i=1 to n do printfn "%s" (loopMulTable i);;
-
-printfn "%s" (loopMulTable 10);;
-//print 10;;
+printfn "%s" (loopMulTable 10) //print 10
