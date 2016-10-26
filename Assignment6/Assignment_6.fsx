@@ -53,12 +53,12 @@ let rec colourAt (x,y) figure =
         | (Some (r1,g1,b1), Some (r2,g2,b2)) ->
             Some ((r1+r2)/2, (g1+g2)/2, (b1+b2)/2)// gennemsnitsfarve
     | Twice (fig, (vx, vy)) ->
-        match  (colourAt (x,y) figure, colourAt (x,y) (move fig (vx,vy))) with
+        match  (colourAt (x,y) fig, colourAt (x,y) (move fig (vx,vy))) with
         | (None, c) -> c
         | (c, None) -> c
         | (c, k) -> k
 
-let g61 : figure = move (Twice ((Mix (Circle((50,50),45,(255,0,0)), Rectangle((40,40),(90,110),(0,0,256)))),(50,70))) (0,0)
+let g61 : figure = Twice ((Mix (Circle((50,50),45,(255,0,0)), Rectangle((40,40),(90,110),(0,0,256)))),(50,70))
 let drawModel (x,y) =
     match colourAt (x,y) g61 with
     | Some(x) -> x
