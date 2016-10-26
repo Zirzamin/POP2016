@@ -1,0 +1,1 @@
+makeBMP.makeBMP "test2" 500 500 (fun (x,y) -> (x,y,0))
