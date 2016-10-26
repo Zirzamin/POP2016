@@ -1,4 +1,4 @@
-//6i.1
+//6g.1
 type weekday = Monday | Tuesday | Wednesday | Thursday | Friday | Saturday | Sunday
 //Typen weekday som indeholder ugedagene
 
@@ -16,7 +16,7 @@ let numberToDay number = //Funktion som tager et int som input
 printf "%A" (numberToDay 3) //Test inden for inputtets krav
 printf "%A" (numberToDay 8) //Test uden for inputtets krav
 
-//6i.2 og frem
+//6g.2 og frem
 type point = int * int // a point (x, y) in the plane
 type colour = int * int * int // (red, green, blue), 0..255 each
 type figure =
@@ -58,7 +58,7 @@ let rec colourAt (x,y) figure =
         | (c, None) -> c
         | (c, k) -> k
 
-let g61 : figure = move (Twice (Mix ((Circle((50,50),45,(255,0,0)), Rectangle((40,40),(90,110),(0,0,256)))),(50,70))) (0,0)
+let g61 : figure = move (Twice ((Mix (Circle((50,50),45,(255,0,0)), Rectangle((40,40),(90,110),(0,0,256)))),(50,70))) (0,0)
 let drawModel (x,y) =
     match colourAt (x,y) g61 with
     | Some(x) -> x
