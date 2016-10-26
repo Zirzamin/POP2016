@@ -1,4 +1,23 @@
-﻿type point = int * int // a point (x, y) in the plane
+//6i.1
+type weekday = Monday | Tuesday | Wednesday | Thursday | Friday | Saturday | Sunday
+//Typen weekday som indeholder ugedagene
+
+let numberToDay number = //Funktion som tager et int som input
+  match number with      //Matcher int med ugedagende fra et til syv
+  |1 -> Some (Monday)
+  |2 -> Some (Tuesday)
+  |3 -> Some (Wednesday)
+  |4 -> Some (Thursday)
+  |5 -> Some (Friday)
+  |6 -> Some (Saturday)
+  |7 -> Some (Sunday)
+  |_ -> None           //Returnerer None hvis inputtet ikke svarer til en ugedag
+
+printf "%A" (numberToDay 3) //Test inden for inputtets krav
+printf "%A" (numberToDay 8) //Test uden for inputtets krav
+
+//6i.2 og frem
+type point = int * int // a point (x, y) in the plane
 type colour = int * int * int // (red, green, blue), 0..255 each
 type figure =
     | Circle of point * int * colour
@@ -17,7 +36,7 @@ let rec move figure vector =
     | Circle (point, r, col)      -> Circle (point |+| vector, r, col)
     | Rectangle (p0, p1, col) -> Rectangle (p0 |+| vector, p1 |+| vector, col)
     | Mix (f0, f1)      -> Mix (move f0 vector, move f1 vector)
-
+    | Twice (b0, vector2)     -> Mix (b0, move b0 vector2)
 let rec colourAt (x,y) figure =
     match figure with
     | Circle ((cx,cy), r, col) ->
@@ -39,9 +58,9 @@ let rec colourAt (x,y) figure =
         | (c, None) -> c
         | (c, k) -> k
 
-let g61 : figure = Twice (Mix (Circle((50,50),45,(255,0,0)), Rectangle((40,40),(90,110),(0,0,256))),(50,70));;
-let drawModel (x,y) = 
+let g61 : figure = move (Twice (Mix ((Circle((50,50),45,(255,0,0)), Rectangle((40,40),(90,110),(0,0,256)))),(50,70))) (0,0)
+let drawModel (x,y) =
     match colourAt (x,y) g61 with
     | Some(x) -> x
     | None -> (128,128,128)
-makeBMP.makeBMP "g63.bmp" 150 200 drawModel;;
+makeBMP.makeBMP "g63.bmp" 150 200 drawModel
