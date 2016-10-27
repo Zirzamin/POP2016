@@ -13,8 +13,8 @@ let numberToDay number = //Funktion som tager et int som input
   |7 -> Some (Sunday)
   |_ -> None           //Returnerer None hvis inputtet ikke svarer til en ugedag
 
-printf "%A" (numberToDay 3) //Test inden for inputtets krav
-printf "%A" (numberToDay 8) //Test uden for inputtets krav
+printfn "%A" (numberToDay 3) //Test inden for inputtets krav
+printfn "%A" (numberToDay 8) //Test uden for inputtets krav
 
 //6g.2 og frem
 type point = int * int // a point (x, y) in the plane
@@ -63,7 +63,7 @@ let drawModel (x,y) =
     match colourAt (x,y) g61 with
     | Some(x) -> x
     | None -> (128,128,128)
-makeBMP.makeBMP "g63.bmp" 150 200 drawModel
+//makeBMP.makeBMP "g63.bmp" 150 200 drawModel
 
 let checkColour col =
   match col with
@@ -113,7 +113,7 @@ let rec boundingBox figure =
       else ((f2minx, f2miny),(f2maxx, f2maxy))
   | Twice (fig, (vx, vy)) ->
     match boundingBox fig with
-    |((f1minx, f1miny),(f1maxx, f1maxy)) ->
-      if ((f1minx+vx),(f1miny+vy)) < (f1minx, f1miny) then (((f1minx+vx),(f1miny+vy)),(f1maxx, f1maxy))
-      else ((f1minx, f1miny),((f1maxx+vx), (f1maxy+vy)))
+    |((figminx, figminy),(figmaxx, figmaxy)) ->
+      if ((figminx+vx),(figminy+vy)) < (figminx, figminy) then (((figminx+vx),(figminy+vy)),(figmaxx, figmaxy))
+      else ((figminx, figminy),((figmaxx+vx), (figmaxy+vy)))
 printfn "%A" (boundingBox g61)
