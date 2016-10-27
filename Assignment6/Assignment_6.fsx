@@ -64,3 +64,25 @@ let drawModel (x,y) =
     | Some(x) -> x
     | None -> (128,128,128)
 makeBMP.makeBMP "g63.bmp" 150 200 drawModel
+
+let checkColour col =
+  match col with
+  |(r,g,b) ->
+      if 0 <= r && r <= 256 && 0 <= g && g <= 256 && 0 <= b && b <= 256
+        then true
+      else false
+let rec checkFigure figure =
+  match figure with
+  | Circle ((cx,cy), r, col) ->
+      if r > 0 && checkColour col = true
+      then true else false
+  | Rectangle ((x0,y0), (x1,y1), col) ->
+      if x0 < x1 && y0 < y1 && checkColour col = true
+      then true else false
+  | Mix (f1, f2) ->
+      checkFigure f1 && checkFigure f2
+  | Twice (fig, (vx, vy)) ->
+      if checkFigure fig = true then true
+      else false
+
+printfn "%A" (checkFigure g61)
