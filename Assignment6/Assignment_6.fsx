@@ -90,27 +90,23 @@ printfn "%A" (checkFigure g61)
 let rec boundingBox figure =
   match figure with
   | Circle ((cx,cy), r, col) ->
-    let minx = cx-r
-    let maxx = cx+r
-    let miny = cy-r
-    let maxy = cy+r
-    ((minx,miny),(maxx,maxy))
+    let min = ((cx-r),(cy-r))
+    let max = ((cx+r),(cy+r))
+    (min,max)
   | Rectangle ((x0,y0), (x1,y1), col) ->
-    let minx = x0
-    let maxx = x1
-    let miny = y0
-    let maxy = y1
-    ((minx, miny), (maxx,maxy))
+    let min = (x0,y0)
+    let max = (x1,y1)
+    (min,max)
   |Mix (f1, f2) ->
     match (boundingBox f1, boundingBox f2) with
-    |(((f1minx, f1miny),(f1maxx, f1maxy)),((f2minx, f2miny), (f2maxx, f2maxy))) ->
-      if (f1minx, f1miny) < (f2minx, f2miny) && (f1maxx, f1maxy) > (f2maxx, f2maxy)
-        then ((f1minx, f1miny),(f1maxx, f1maxy))
-      elif (f1minx, f1miny) > (f2minx, f2miny) && (f1maxx,f1maxy) > (f2maxx, f2maxy)
-        then  ((f2minx, f2miny),(f1maxx, f1maxy))
-      elif (f1minx, f1miny) < (f2minx, f2miny) && (f1maxx, f1maxy) < (f2maxx, f2maxy)
-        then ((f1minx, f1miny),(f2maxx, f2maxy))
-      else ((f2minx, f2miny),(f2maxx, f2maxy))
+    |((minf1,maxf1), (minf2,maxf2)) ->
+      if minf1 < minf2 && maxf1 > maxf2
+        then (minf1,maxf1)
+      elif minf1 > minf2 && maxf1 > maxf2
+        then  (minf2,maxf1)
+      elif minf1 < minf2 && maxf1 < maxf2
+        then (minf1,maxf2)
+      else (minf2,maxf2)
   | Twice (fig, (vx, vy)) ->
     match boundingBox fig with
     |((figminx, figminy),(figmaxx, figmaxy)) ->
