@@ -108,8 +108,14 @@ let rec boundingBox figure =
         then (minf1,maxf2)
       else (minf2,maxf2)
   | Twice (fig, (vx, vy)) ->
-    match boundingBox fig with
-    |((figminx, figminy),(figmaxx, figmaxy)) ->
-      if ((figminx+vx),(figminy+vy)) < (figminx, figminy) then (((figminx+vx),(figminy+vy)),(figmaxx, figmaxy))
-      else ((figminx, figminy),((figmaxx+vx), (figmaxy+vy)))
+    match fig with
+    |Mix (f1, f2) ->
+      if boundingBox f1 < boundingBox f2 then
+        boundingBox (Mix (f1,(Twice (f2, (vx, vy)))))
+      else boundingBox (Mix (f2,(Twice (f1, (vx, vy)))))
+    |_ ->
+      match boundingBox fig with
+      |((figminx, figminy),(figmaxx, figmaxy)) ->
+        if ((figminx+vx),(figminy+vy)) < (figminx, figminy) then (((figminx+vx),(figminy+vy)),(figmaxx, figmaxy))
+        else ((figminx, figminy),((figmaxx+vx), (figmaxy+vy)))
 printfn "%A" (boundingBox g61)
