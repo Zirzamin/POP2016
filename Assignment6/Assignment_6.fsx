@@ -13,6 +13,7 @@ let numberToDay number = //Funktion som tager et int som input
   |7 -> Some (Sunday)
   |_ -> None           //Returnerer None hvis inputtet ikke svarer til en ugedag
 
+printfn "Test af numberToDay"
 printfn "%A" (numberToDay 3) //Test inden for inputtets krav
 printfn "%A" (numberToDay 8) //Test uden for inputtets krav
 
@@ -36,7 +37,8 @@ let rec move figure vector =
     | Circle (point, r, col)      -> Circle (point |+| vector, r, col)
     | Rectangle (p0, p1, col) -> Rectangle (p0 |+| vector, p1 |+| vector, col)
     | Mix (f0, f1)      -> Mix (move f0 vector, move f1 vector)
-    | Twice (b0, vector2)     -> Mix (b0, move b0 vector2)
+    | Twice (b0, vector2)     -> move (Mix (b0, move b0 vector2)) vector
+
 let rec colourAt (x,y) figure =
     match figure with
     | Circle ((cx,cy), r, col) ->
@@ -59,11 +61,12 @@ let rec colourAt (x,y) figure =
         | (c, k) -> k
 
 let g61 : figure = Twice ((Mix (Circle((50,50),45,(255,0,0)), Rectangle((40,40),(90,110),(0,0,256)))),(50,70))
+
 let drawModel (x,y) =
     match colourAt (x,y) g61 with
     | Some(x) -> x
     | None -> (128,128,128)
-//makeBMP.makeBMP "g63.bmp" 150 200 drawModel
+makeBMP.makeBMP "g63.bmp" 150 200 drawModel
 
 let checkColour col =
   match col with
@@ -71,6 +74,7 @@ let checkColour col =
       if 0 <= r && r <= 256 && 0 <= g && g <= 256 && 0 <= b && b <= 256
         then true
       else false
+
 let rec checkFigure figure =
   match figure with
   | Circle ((cx,cy), r, col) ->
@@ -85,36 +89,27 @@ let rec checkFigure figure =
       if checkFigure fig = true then true
       else false
 
-printfn "%A" (checkFigure g61)
-
-let makecoord coord1 coord2 vector =
-  match (coord1,coord2,vector) with
-  |(((minx1,miny1),(maxx1,maxy1)),((minx2,miny2),(maxx2,maxy2)),(vx,vy))->
+let makecoord coord1 coord2 =
+  match (coord1,coord2) with
+  |(((minx1,miny1),(maxx1,maxy1)),((minx2,miny2),(maxx2,maxy2)))->
     let xmax =
-      if (maxx1+vx) < (maxx2+vx) then
+      if (maxx1) < (maxx2) then
         maxx2
       else maxx1
     let xmin =
-      if (minx1-vx) > (minx2-vx) then
+      if (minx1) > (minx2) then
         minx2
       else minx1
     let ymax =
-      if (maxy1+vy) < (maxy2+vy) then
+      if (maxy1) < (maxy2) then
         maxy2
       else maxy1
     let ymin =
-      if (miny1-vy) > (minx2-vy) then
+      if (miny1) > (minx2) then
         miny2
       else miny1
-    let coord =
-      if (0 + vx) > 0 && (0+vy) > 0 then
-        ((xmin,ymin),((xmax+vx),(ymax+vy)))
-      elif (0 + vx) < 0 && (0+vy) > 0 then
-        (((xmin-vx),ymin),(xmax,(ymax+vy)))
-      elif (0 + vx) > 0 && (0+vy) < 0 then
-        ((xmin,(ymin-vy)),(xmax,(ymax+vy)))
-      else (((xmin-vx),(ymin-vy)),(xmax,ymax))
-    coord
+    ((xmin,ymin),(xmax,ymax))
+
 let rec boundingBox figure =
   match figure with
   | Circle ((cx,cy), r, col) ->
@@ -126,23 +121,57 @@ let rec boundingBox figure =
     let max = (x1,y1)
     (min,max)
   |Mix (f1, f2) ->
-    match (boundingBox f1, boundingBox f2) with
-    |((minf1,maxf1), (minf2,maxf2)) ->
-      if minf1 < minf2 && maxf1 > maxf2
-        then (minf1,maxf1)
-      elif minf1 > minf2 && maxf1 > maxf2
-        then  (minf2,maxf1)
-      elif minf1 < minf2 && maxf1 < maxf2
-        then (minf1,maxf2)
-      else (minf2,maxf2)
+    let mixcoords = (makecoord (boundingBox f1) (boundingBox f2))
+    mixcoords
   | Twice (fig, (vx, vy)) ->
     match fig with
     |Mix (f1, f2) ->
-        let coords = (makecoord (boundingBox f1) (boundingBox f2) (vx,vy))
-        coords
+        let coords = (makecoord (boundingBox f1) (boundingBox f2))
+        match coords with
+        |((xmin,ymin),(xmax,ymax)) ->
+          if (0 + vx) > 0 && (0+vy) > 0 then
+            ((xmin,ymin),((xmax+vx),(ymax+vy)))
+          elif (0 + vx) < 0 && (0+vy) > 0 then
+            (((xmin-vx),ymin),(xmax,(ymax+vy)))
+          elif (0 + vx) > 0 && (0+vy) < 0 then
+            ((xmin,(ymin-vy)),(xmax,(ymax+vy)))
+          else (((xmin-vx),(ymin-vy)),(xmax,ymax))
     |_ ->
       match boundingBox fig with
       |((figminx, figminy),(figmaxx, figmaxy)) ->
         if ((figminx+vx),(figminy+vy)) < (figminx, figminy) then (((figminx+vx),(figminy+vy)),(figmaxx, figmaxy))
         else ((figminx, figminy),((figmaxx+vx), (figmaxy+vy)))
-printfn "%A" (boundingBox g61)
+
+let g62 : figure = Rectangle((40,40),(90,110),(0,0,256))
+let g63 : figure = Circle((50,50),45,(255,0,0))
+let g64 : figure = Mix (Circle((50,50),45,(255,0,0)), Rectangle((40,40),(90,110),(0,0,256)))
+let g65 : figure = Twice (Twice ((Mix (Circle((50,50),45,(255,0,0)), Rectangle((40,40),(90,110),(0,0,256)))),(50,70)),(10,10))
+let g66 : figure = Twice (Circle((50,50),45,(255,0,0)), (10,10))
+let g67 : figure = Twice (Circle((50,50),-45,(255,0,0)), (10,10))
+let g68 : figure = Rectangle((90,110),(40,40),(0,0,256))
+
+printfn "\n Test af Move"
+printfn "g61: %A" ((boundingBox (move g61 (10,10)))=((15,15),(155,190)))
+printfn "g62: %A" ((boundingBox (move g62 (10,10)))=((50,50),(100,120)))
+printfn "g63: %A" ((boundingBox (move g63 (10,10)))=((15,15),(105,105)))
+printfn "g64: %A" ((boundingBox (move g64 (10,10)))=((15,15),(105,120)))
+printfn "g65: %A" ((boundingBox (move g65 (10,10)))=((15,15),(165,200)))
+printfn "g66: %A" ((boundingBox (move g66 (10,10)))=((15,15),(115,115)))
+
+printfn "\n Test af checkFigure"
+printfn "g61: %A" (checkFigure g61)
+printfn "g62: %A" (checkFigure g62)
+printfn "g63: %A" (checkFigure g63)
+printfn "g64: %A" (checkFigure g64)
+printfn "g65: %A" (checkFigure g65)
+printfn "g66: %A" (checkFigure g66)
+printfn "g67: %A" (checkFigure g67)
+printfn "g68: %A" (checkFigure g68)
+
+printfn "\n Test af boundingBox"
+printfn "g61: %A" (boundingBox g61)
+printfn "g62: %A" (boundingBox g62)
+printfn "g63: %A" (boundingBox g63)
+printfn "g64: %A" (boundingBox g64)
+printfn "g65: %A" (boundingBox g65)
+printfn "g66: %A" (boundingBox g66)
