@@ -87,6 +87,34 @@ let rec checkFigure figure =
 
 printfn "%A" (checkFigure g61)
 
+let makecoord coord1 coord2 vector =
+  match (coord1,coord2,vector) with
+  |(((minx1,miny1),(maxx1,maxy1)),((minx2,miny2),(maxx2,maxy2)),(vx,vy))->
+    let xmax =
+      if (maxx1+vx) < (maxx2+vx) then
+        maxx2
+      else maxx1
+    let xmin =
+      if (minx1-vx) > (minx2-vx) then
+        minx2
+      else minx1
+    let ymax =
+      if (maxy1+vy) < (maxy2+vy) then
+        maxy2
+      else maxy1
+    let ymin =
+      if (miny1-vy) > (minx2-vy) then
+        miny2
+      else miny1
+    let coord =
+      if (0 + vx) > 0 && (0+vy) > 0 then
+        ((xmin,ymin),((xmax+vx),(ymax+vy)))
+      elif (0 + vx) < 0 && (0+vy) > 0 then
+        (((xmin-vx),ymin),(xmax,(ymax+vy)))
+      elif (0 + vx) > 0 && (0+vy) < 0 then
+        ((xmin,(ymin-vy)),(xmax,(ymax+vy)))
+      else (((xmin-vx),(ymin-vy)),(xmax,ymax))
+    coord
 let rec boundingBox figure =
   match figure with
   | Circle ((cx,cy), r, col) ->
@@ -110,9 +138,8 @@ let rec boundingBox figure =
   | Twice (fig, (vx, vy)) ->
     match fig with
     |Mix (f1, f2) ->
-      if boundingBox f1 < boundingBox f2 then
-        boundingBox (Mix (f1,(Twice (f2, (vx, vy)))))
-      else boundingBox (Mix (f2,(Twice (f1, (vx, vy)))))
+        let coords = (makecoord (boundingBox f1) (boundingBox f2) (vx,vy))
+        coords
     |_ ->
       match boundingBox fig with
       |((figminx, figminy),(figmaxx, figmaxy)) ->
