@@ -61,12 +61,31 @@ let rec colourAt (x,y) figure =
         | (c, k) -> k
 
 let g61 : figure = Twice ((Mix (Circle((50,50),45,(255,0,0)), Rectangle((40,40),(90,110),(0,0,256)))),(50,70))
+let g62 : figure = Rectangle((40,40),(90,110),(0,0,256))
+let g63 : figure = Circle((50,50),45,(255,0,0))
+let g64 : figure = Mix (Circle((50,50),45,(255,0,0)), Rectangle((40,40),(90,110),(0,0,256)))
+let g65 : figure = Twice (Twice ((Mix (Circle((50,50),45,(255,0,0)), Rectangle((40,40),(90,110),(0,0,256)))),(50,70)),(10,10))
+let g66 : figure = Twice (Circle((50,50),45,(255,0,0)), (10,10))
+let g67 : figure = Twice (Circle((50,50),-45,(255,0,0)), (10,10))
+let g68 : figure = Rectangle((90,110),(40,40),(0,0,256))
+let g69 : figure = Twice ((Mix (Circle((50,50),45,(255,0,0)), Rectangle((40,40),(90,110),(0,0,256)))),(-50,-70))
 
 let drawModel (x,y) =
     match colourAt (x,y) g61 with
     | Some(x) -> x
     | None -> (128,128,128)
-//makeBMP.makeBMP "g63.bmp" 150 200 drawModel
+let drawModel2 (x,y) =
+    match colourAt (x,y) g64 with
+    | Some(x) -> x
+    | None -> (128,128,128)
+let drawModel3 (x,y) =
+    match colourAt (x,y) g69 with
+    | Some(x) -> x
+    | None -> (128,128,128)
+
+makeBMP.makeBMP "g63.bmp" 150 200 drawModel
+makeBMP.makeBMP "g64.bmp" 150 200 drawModel2
+makeBMP.makeBMP "g69.bmp" 150 200 drawModel3
 
 let checkColour col =
   match col with
@@ -132,24 +151,15 @@ let rec boundingBox figure =
           if (0 + vx) > 0 && (0+vy) > 0 then
             ((xmin,ymin),((xmax+vx),(ymax+vy)))
           elif (0 + vx) < 0 && (0+vy) > 0 then
-            (((xmin-vx),ymin),(xmax,(ymax+vy)))
+            (((xmin+vx),ymin),(xmax,(ymax+vy)))
           elif (0 + vx) > 0 && (0+vy) < 0 then
-            ((xmin,(ymin-vy)),(xmax,(ymax+vy)))
+            ((xmin,(ymin+vy)),(xmax,(ymax+vy)))
           else (((xmin+vx),(ymin+vy)),(xmax,ymax))
     |_ ->
       match boundingBox fig with
       |((figminx, figminy),(figmaxx, figmaxy)) ->
         if ((figminx+vx),(figminy+vy)) < (figminx, figminy) then (((figminx+vx),(figminy+vy)),(figmaxx, figmaxy))
         else ((figminx, figminy),((figmaxx+vx), (figmaxy+vy)))
-
-let g62 : figure = Rectangle((40,40),(90,110),(0,0,256))
-let g63 : figure = Circle((50,50),45,(255,0,0))
-let g64 : figure = Mix (Circle((50,50),45,(255,0,0)), Rectangle((40,40),(90,110),(0,0,256)))
-let g65 : figure = Twice (Twice ((Mix (Circle((50,50),45,(255,0,0)), Rectangle((40,40),(90,110),(0,0,256)))),(50,70)),(10,10))
-let g66 : figure = Twice (Circle((50,50),45,(255,0,0)), (10,10))
-let g67 : figure = Twice (Circle((50,50),-45,(255,0,0)), (10,10))
-let g68 : figure = Rectangle((90,110),(40,40),(0,0,256))
-let g69 : figure = Twice ((Mix (Circle((50,50),45,(255,0,0)), Rectangle((40,40),(90,110),(0,0,256)))),(-50,-70))
 
 printfn "\n Test af Move"
 printfn "g61: %A" ((boundingBox (move g61 (10,10)))=((15,15),(155,190)))
