@@ -153,7 +153,7 @@ let rec boundingBox figure =
           elif (0 + vx) < 0 && (0+vy) > 0 then
             (((xmin+vx),ymin),(xmax,(ymax+vy)))
           elif (0 + vx) > 0 && (0+vy) < 0 then
-            ((xmin,(ymin+vy)),(xmax,(ymax+vy)))
+            ((xmin,(ymin+vy)),(xmax+vx,(ymax)))
           else (((xmin+vx),(ymin+vy)),(xmax,ymax))
     |_ ->
       match boundingBox fig with
