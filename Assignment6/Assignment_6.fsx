@@ -66,7 +66,7 @@ let drawModel (x,y) =
     match colourAt (x,y) g61 with
     | Some(x) -> x
     | None -> (128,128,128)
-makeBMP.makeBMP "g63.bmp" 150 200 drawModel
+//makeBMP.makeBMP "g63.bmp" 150 200 drawModel
 
 let checkColour col =
   match col with
@@ -135,7 +135,7 @@ let rec boundingBox figure =
             (((xmin-vx),ymin),(xmax,(ymax+vy)))
           elif (0 + vx) > 0 && (0+vy) < 0 then
             ((xmin,(ymin-vy)),(xmax,(ymax+vy)))
-          else (((xmin-vx),(ymin-vy)),(xmax,ymax))
+          else (((xmin+vx),(ymin+vy)),(xmax,ymax))
     |_ ->
       match boundingBox fig with
       |((figminx, figminy),(figmaxx, figmaxy)) ->
@@ -149,6 +149,7 @@ let g65 : figure = Twice (Twice ((Mix (Circle((50,50),45,(255,0,0)), Rectangle((
 let g66 : figure = Twice (Circle((50,50),45,(255,0,0)), (10,10))
 let g67 : figure = Twice (Circle((50,50),-45,(255,0,0)), (10,10))
 let g68 : figure = Rectangle((90,110),(40,40),(0,0,256))
+let g69 : figure = Twice ((Mix (Circle((50,50),45,(255,0,0)), Rectangle((40,40),(90,110),(0,0,256)))),(-50,-70))
 
 printfn "\n Test af Move"
 printfn "g61: %A" ((boundingBox (move g61 (10,10)))=((15,15),(155,190)))
@@ -157,6 +158,7 @@ printfn "g63: %A" ((boundingBox (move g63 (10,10)))=((15,15),(105,105)))
 printfn "g64: %A" ((boundingBox (move g64 (10,10)))=((15,15),(105,120)))
 printfn "g65: %A" ((boundingBox (move g65 (10,10)))=((15,15),(165,200)))
 printfn "g66: %A" ((boundingBox (move g66 (10,10)))=((15,15),(115,115)))
+printfn "g69: %A" ((boundingBox (move g69 (10,10)))=((-35,-55),(105,120)))
 
 printfn "\n Test af checkFigure"
 printfn "g61: %A" (checkFigure g61)
@@ -167,6 +169,7 @@ printfn "g65: %A" (checkFigure g65)
 printfn "g66: %A" (checkFigure g66)
 printfn "g67: %A" (checkFigure g67)
 printfn "g68: %A" (checkFigure g68)
+printfn "g69: %A" (checkFigure g69)
 
 printfn "\n Test af boundingBox"
 printfn "g61: %A" (boundingBox g61)
@@ -175,3 +178,4 @@ printfn "g63: %A" (boundingBox g63)
 printfn "g64: %A" (boundingBox g64)
 printfn "g65: %A" (boundingBox g65)
 printfn "g66: %A" (boundingBox g66)
+printfn "g69: %A" (boundingBox g69)
