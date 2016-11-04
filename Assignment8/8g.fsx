@@ -16,7 +16,8 @@ let makeCode player =
     let mutable counter = 0
     printf "Choose your color, Red, Green, Yellow, Purple, White, Black"
     while counter <= 4 do
-      match System.Console.Readline() with
+      let mutable colorinput = System.Console.Readline()
+      match colorinput with
       |"Red"|"red" ->
         Red :: mastercode
         counter <- counter+1
