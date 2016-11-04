@@ -16,30 +16,30 @@ let makeCode player =
     let mutable counter = 0
     printf "Choose your color, Red, Green, Yellow, Purple, White, Black"
     while counter <= 4 do
-      match System.Console.Readline () with
+      match System.Console.Readline() with
       |"Red"|"red" ->
         Red :: mastercode
-        counter -> counter+1
+        counter <- counter+1
         printfn "Du har har valgt rød, og har %A valg tilbage" (4-counter)
       |"Green"|"green" ->
         Green :: mastercode
-        counter -> counter+1
+        counter <- counter+1
         printfn "Du har har valgt rød, og har %A valg tilbage" (4-counter)
       |"Yellow"|"yellow" ->
         Yellow :: mastercode
-        counter -> counter+1
+        counter <- counter+1
         printfn "Du har har valgt rød, og har %A valg tilbage" (4-counter)
       |"Purple"|"purple" ->
         Purple :: mastercode
-        counter -> counter+1
+        counter <- counter+1
         printfn "Du har har valgt rød, og har %A valg tilbage" (4-counter)
       |"White"|"white" ->
         White :: mastercode
-        counter -> counter+1
+        counter <- counter+1
         printfn "Du har har valgt rød, og har %A valg tilbage" (4-counter)
       |"Black"|"black" ->
         Black :: mastercode
-        counter -> counter+1
+        counter <- counter+1
         printfn "Du har har valgt rød, og har %A valg tilbage" (4-counter)
     //Kode som lader spilleren skifte imellem de 6 farver
     //og overfører hvert af fire valg til en liste
