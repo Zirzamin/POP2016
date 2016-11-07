@@ -7,10 +7,10 @@ type player = Human | Computer
 (*let makemenu stringlist =
   let whileloop = true
   while whileloop = true do*)
-
-
+let player = Human
+let mutable board : board = []
 let makeCode (player : player) =
-  let mutable mastercode : code = []
+  let mutable code : code = []
   match player with
   |Human ->
     let mutable counter = 0
@@ -19,34 +19,33 @@ let makeCode (player : player) =
       let input = System.Console.ReadLine()
       match input with
       |"Red"|"red" ->
-          mastercode <- Red :: mastercode
+          code <- Red :: code
           counter <- counter+1
           printfn "You have chosen red, %A choices left" (4-counter)
       |"Green"|"green" ->
-          mastercode <- Green :: mastercode
+          code <- Green :: code
           counter <- counter+1
           printfn "You have chosen green, %A choices left" (4-counter)
       |"Yellow"|"yellow" ->
-          mastercode <- Yellow :: mastercode
+          code <- Yellow :: code
           counter <- counter+1
           printfn "You have chosen yellow, %A choices left" (4-counter)
       |"Purple"|"purple" ->
-          mastercode <- Purple :: mastercode
+          code <- Purple :: code
           counter <- counter+1
           printfn "You have chosen purple, %A choices left" (4-counter)
       |"White"|"white" ->
-          mastercode <- White :: mastercode
+          code <- White :: code
           counter <- counter+1
           printfn "You have chosen white, %A choices left" (4-counter)
       |"Black"|"black" ->
-          mastercode <- Black :: mastercode
+          code <- Black :: code
           counter <- counter+1
           printfn "You have chosen black, %A choices left" (4-counter)
       |_ ->
-          mastercode <-  mastercode
+          code <-  code
           printfn "Thats not right"
-    printfn "Your mastercode is %A" (List.rev mastercode)
-    List.rev mastercode
+    List.rev code
     //Kode som lader spilleren skifte imellem de 6 farver
     //og overfører hvert af fire valg til en liste
   |Computer ->
@@ -54,21 +53,55 @@ let makeCode (player : player) =
     for i = 1 to 4 do
       match r.Next(1,6) with
       |1 ->
-        mastercode <- Red :: mastercode
+        code <- Red :: code
       |2 ->
-        mastercode <- Green :: mastercode
+        code <- Green :: code
       |3 ->
-        mastercode <- Yellow :: mastercode
+        code <- Yellow :: code
       |4 ->
-        mastercode <- Purple :: mastercode
+        code <- Purple :: code
       |5 ->
-        mastercode <- White :: mastercode
+        code <- White :: code
       |6 ->
-        mastercode <- Black :: mastercode
+        code <- Black :: code
       |_ ->
-        mastercode
-    printfn "Your mastercode is %A" (List.rev mastercode)
-    List.rev mastercode
+        code <- code
+    List.rev code
     //Laver et random kombination
-makeCode Human
-makeCode Computer
+let mastercode = makeCode player
+
+let validate (code : code) =
+  let mutable whitepin = 0
+  let mutable blackpin = 0
+  if mastercode = code then
+    blackpin <- 4
+    (whitepin, blackpin)
+  else
+    for i = 0 to 3 do
+      if code.[i] = mastercode.[i] then
+        blackpin <- blackpin + 1
+      elif List.exists ((=)code.[i]) mastercode then
+        whitepin <- whitepin + 1
+    (whitepin, blackpin)
+
+let guess player board =
+  printfn "Current board:"
+  printfn "%A" board
+  match player with
+  |Human ->
+    let hguess = makeCode Human
+    hguess
+  |Computer ->
+    let cguess = makeCode Computer
+    cguess
+
+let addToBoard guess =
+  if board.Length - 1 < 12 then
+    board <- (guess, (validate guess)) :: board
+  else
+    printfn "You have no more guesses left"
+    board <- board
+
+mastercode
+addToBoard (guess Human board)
+addToBoard (guess Computer board)
