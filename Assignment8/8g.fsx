@@ -10,39 +10,45 @@ type player = Human | Computer
 
 
 let makeCode player =
-  let mastercode = []
+  let mutable mastercode : code = []
   match player with
   |Human ->
     let mutable counter = 0
-    printf "Choose your color, Red, Green, Yellow, Purple, White, Black"
-    while counter <= 4 do
-      let mutable colorinput = System.Console.Readline()
-      match colorinput with
+    printfn "Choose color: Red, Green, Yellow, Purple, White, Black:"
+    while counter < 4 do
+      let input = System.Console.ReadLine()
+      match input with
       |"Red"|"red" ->
-        Red :: mastercode
-        counter <- counter+1
-        printfn "Du har har valgt rød, og har %A valg tilbage" (4-counter)
+          mastercode <- Red :: mastercode
+          counter <- counter+1
+          printfn "You have chosen red, %A choices left" (4-counter)
       |"Green"|"green" ->
-        Green :: mastercode
-        counter <- counter+1
-        printfn "Du har har valgt rød, og har %A valg tilbage" (4-counter)
+          mastercode <- Green :: mastercode
+          counter <- counter+1
+          printfn "You have chosen green, %A choices left" (4-counter)
       |"Yellow"|"yellow" ->
-        Yellow :: mastercode
-        counter <- counter+1
-        printfn "Du har har valgt rød, og har %A valg tilbage" (4-counter)
+          mastercode <- Yellow :: mastercode
+          counter <- counter+1
+          printfn "You have chosen yellow, %A choices left" (4-counter)
       |"Purple"|"purple" ->
-        Purple :: mastercode
-        counter <- counter+1
-        printfn "Du har har valgt rød, og har %A valg tilbage" (4-counter)
+          mastercode <- Purple :: mastercode
+          counter <- counter+1
+          printfn "You have chosen purple, %A choices left" (4-counter)
       |"White"|"white" ->
-        White :: mastercode
-        counter <- counter+1
-        printfn "Du har har valgt rød, og har %A valg tilbage" (4-counter)
+          mastercode <- White :: mastercode
+          counter <- counter+1
+          printfn "You have chosen white, %A choices left" (4-counter)
       |"Black"|"black" ->
-        Black :: mastercode
-        counter <- counter+1
-        printfn "Du har har valgt rød, og har %A valg tilbage" (4-counter)
+          mastercode <- Black :: mastercode
+          counter <- counter+1
+          printfn "You have chosen black, %A choices left" (4-counter)
+      |_ ->
+          mastercode <-  mastercode
+          printfn "Thats not right"
+    printfn "Your mastercode is %A" (List.rev mastercode)
+    List.rev mastercode
     //Kode som lader spilleren skifte imellem de 6 farver
     //og overfører hvert af fire valg til en liste
-  |Computer ->
+  |_ -> mastercode
     //Laver et random kombination
+makeCode Human
