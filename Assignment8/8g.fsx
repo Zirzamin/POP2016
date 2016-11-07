@@ -9,7 +9,7 @@ type player = Human | Computer
   while whileloop = true do*)
 
 
-let makeCode player =
+let makeCode (player : player) =
   let mutable mastercode : code = []
   match player with
   |Human ->
@@ -49,6 +49,26 @@ let makeCode player =
     List.rev mastercode
     //Kode som lader spilleren skifte imellem de 6 farver
     //og overfører hvert af fire valg til en liste
-  |_ -> mastercode
+  |Computer ->
+    let r = System.Random()
+    for i = 1 to 4 do
+      match r.Next(1,6) with
+      |1 ->
+        mastercode <- Red :: mastercode
+      |2 ->
+        mastercode <- Green :: mastercode
+      |3 ->
+        mastercode <- Yellow :: mastercode
+      |4 ->
+        mastercode <- Purple :: mastercode
+      |5 ->
+        mastercode <- White :: mastercode
+      |6 ->
+        mastercode <- Black :: mastercode
+      |_ ->
+        mastercode
+    printfn "Your mastercode is %A" (List.rev mastercode)
+    List.rev mastercode
     //Laver et random kombination
 makeCode Human
+makeCode Computer
